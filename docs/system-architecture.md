@@ -5,7 +5,7 @@ graph TB
     
     Frontend[Frontend Layer<br/>Azure App Service<br/><br/>React + TypeScript<br/>• Product Catalog<br/>• Shopping Cart<br/>• Student Dashboard<br/>• Faculty Portal]
     
-    Backend[Backend Layer<br/>Azure App Service<br/><br/>ASP.NET Core Web API .NET 8<br/>• Authentication JWT<br/>• Product API<br/>• Order API<br/>• Faculty Adoption API]
+    Backend[Backend Layer<br/>Azure App Service<br/><br/>ASP.NET Core Web API .NET 10<br/>• Authentication JWT<br/>• Product API<br/>• Order API<br/>• Faculty Adoption API]
     
     Database[(Database Layer<br/><br/>Azure SQL Database<br/>• Users<br/>• Orders<br/>• Products<br/>• Courses)]
     
