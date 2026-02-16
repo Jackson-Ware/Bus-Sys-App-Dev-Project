@@ -20,7 +20,7 @@ The OSU Campus Store eCommerce Platform is a web-based system designed to stream
 1. User Registration & Login
 2. Product Catalog
 3. Shopping Cart
-4. **Course-Based Auto-Population** (core differentiator)
+4. Course-Based Auto-Population
 5. Unified Price Comparison View
 6. Faculty Textbook Adoption Portal
 7. Adoption-to-Availability Confirmation
