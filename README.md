@@ -61,6 +61,7 @@ The OSU Campus Store eCommerce Platform is a web-based system designed to stream
 - [Systems Architecture Diagram](docs/architecture-diagram.md) - 3-layer architecture overview
 - [Entity Relationship Diagram (ERD)](docs/erd.md) - Database schema and relationships
 - [Architecture Decision Records](docs/architecture-decision-records.md) - Technology stack justifications
+- [Project Kanban Board](https://github.com/Jackson-Ware/projects/1/views/1) - Feature prioritization and task tracking
 - [Component Architecture](docs/component-architecture.md) - Frontend component hierarchy (Atomic Design)
 - [AI Usage Documentation](docs/AI-Usage-Documentation.md) - Transparency on AI tool usage
 
