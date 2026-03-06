@@ -14,6 +14,31 @@ The OSU Campus Store eCommerce Platform is a web-based system designed to stream
 
 ---
 
+## How to Run Locally
+
+### Prerequisites
+- Node.js 18+
+- .NET 10 SDK
+
+### Run the Backend API
+```bash
+cd BuckeyeMarketplace.API
+dotnet run --launch-profile https
+```
+API will be available at `http://localhost:5000`
+
+### Run the Frontend
+```bash
+cd client
+npm install
+npm run dev
+```
+React app will be available at `http://localhost:5173`
+
+> **Note:** Both must be running simultaneously for the app to work.
+
+---
+
 ## Feature Prioritization
 
 ### Must-Have Features (P1) - 9 Total
