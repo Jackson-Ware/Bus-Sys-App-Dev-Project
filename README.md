@@ -39,6 +39,16 @@ React app will be available at `http://localhost:5173`
 
 ---
 
+## Screenshots
+
+### Product List Page
+![Product List](docs/screenshots/product-list.png)
+
+### Product Detail Page
+![Product Detail](docs/screenshots/product-detail.png)
+
+---
+
 ## Feature Prioritization
 
 ### Must-Have Features (P1) - 9 Total
@@ -92,18 +102,41 @@ React app will be available at `http://localhost:5173`
 
 ---
 
-## AI Tools Used
+## AI Usage
+
+**Milestone 2**
 
 **Tool:** Claude (Anthropic) - Sonnet 4.5  
 **Purpose:** Documentation structure, concept explanations, markdown formatting  
 **Disclosure:** All AI-generated content was reviewed, validated, edited, and customized by the student. All architectural decisions and technology choices are my own. See [AI Usage Documentation](docs/AI-Usage-Documentation.md) for full details.
 
+**Milestone 3**
+
+**Tools Used:** GitHub Copilot, Claude (Anthropic)
+
+| What | Prompt Used | Accepted/Modified |
+|------|-------------|-------------------|
+| Product.cs model | "Create a Product.cs model class with fields: id, title, description, price, category, sellerName, postedDate, imageUrl" | Accepted as-is |
+| ProductsController | "Create a ProductsController with GET /api/products and GET /api/products/{id} with 404 handling and 8 OSU products" | Accepted as-is |
+| ProductCard.tsx | "Create a ProductCard component with OSU scarlet/gray styling and useNavigate" | Modified import type syntax |
+| ProductList.tsx | "Create a ProductList that fetches from API with loading/empty states" | Modified import type syntax |
+| ProductDetail.tsx | "Create a ProductDetail using useParams to fetch single product" | Modified import type syntax |
+| App.tsx routing | "Set up React Router with routes for / and /products/:id" | Accepted as-is |
+
+**My own decisions:**
+- Chose OSU-themed product data (textbooks, clothing, fan gear) to match personas
+
+**Issues I fixed myself:**
+- Copilot consistently generated `import { Product }` instead of 
+  `import type { Product }` — fixed manually in all three component files
+- Disabled HTTPS redirection in Program.cs to fix localhost redirect loop
+- Added port 5174 to CORS config when Vite switched ports
 ---
 
 ## Project Status
 
-**Current Milestone:** Milestone 2 - Architecture Design & Frontend Foundation  
-**Completion Date:** February 15, 2026  
+**Current Milestone:** Milestone 3 - Product Catalog (Vertical Slice 1)
+**Completion Date:** March 6, 2026  
 **Course:** ACCTMIS 4630 - Business Systems Development
 
 ---
