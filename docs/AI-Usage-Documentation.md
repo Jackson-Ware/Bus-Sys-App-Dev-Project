@@ -175,3 +175,158 @@ I used Claude as a learning assistant and documentation aid, similar to how I wo
 
 **Signature:** Jackson Ware  
 **Date:** February 15, 2026
+
+---
+
+---
+
+# AI Usage Documentation — Milestone 4
+
+## Project Information
+**Project:** OSU Campus Store eCommerce Platform  
+**Course:** ACCTMIS 4630 - Business Systems Development  
+**Milestone:** Milestone 4 - Shopping Cart Feature  
+**Student:** Jackson Ware  
+**Date:** March 31, 2026
+
+---
+
+## AI Tools Used
+- **Claude Code** (VS Code extension) — code generation and implementation
+- **Claude.ai** (chat) — planning, guidance, and troubleshooting
+
+---
+
+## Tasks Where AI Was Used
+
+### 1. Project Analysis
+**What I Asked For:**
+> "Explore the project at c:\Users\jacks\Documents\Bus-Sys-App-Dev-Project and give me a comprehensive picture of the tech stack, what has already been built, and the overall project architecture."
+
+**What AI Provided:**
+- Full analysis of the existing Milestone 3 codebase
+- Identified React 19 + TypeScript + Vite frontend, .NET 10 backend, and hardcoded product data with no database
+
+**My Contribution:**
+- Directed the analysis toward what I needed to plan Milestone 4
+- Used the findings to determine what needed to be built (database layer, cart feature)
+
+---
+
+### 2. Entity Framework Core & Database Setup
+**What I Asked For:**
+> "Set up Entity Framework Core in my .NET project. Install the necessary NuGet packages, create an AppDbContext, create Cart and CartItem models with proper relationships to the existing Product model, add the connection string to appsettings.json using SQLite, register the DbContext in Program.cs, and generate the initial EF migration for the cart tables."
+
+**What AI Generated:**
+- `CartItem.cs` — model with Id, UserId, ProductId, Quantity, AddedDate, and Product navigation property
+- `AppDbContext.cs` — DbSets for Products and CartItems, with all 8 products seeded
+- `Program.cs` — registered DbContext, configured auto-migration on startup
+- `appsettings.json` — SQLite connection string
+- `.gitignore` — added `bin/`, `obj/`, `.vs/`, `*.db`
+- EF migration `InitialCreate` — Products and CartItems tables
+
+**My Contribution:**
+- Reviewed the generated models and migration for correctness
+- Verified the database schema matched the ERD from Milestone 2
+
+---
+
+### 3. Cart API (Backend)
+**What I Asked For:**
+> "Create a CartController.cs with all 5 cart endpoints: GET /api/cart, POST /api/cart, PUT /api/cart/{cartItemId}, DELETE /api/cart/{cartItemId}, and DELETE /api/cart/clear. Use a hardcoded userId of 1 for now."
+
+**What AI Generated:**
+- `CartController.cs` — all 5 endpoints with proper HTTP status codes
+- `ProductsController.cs` — refactored to use AppDbContext instead of hardcoded list
+
+**My Contribution:**
+- Tested each endpoint and confirmed correct behavior
+- Verified HTTP status codes matched RESTful conventions
+
+---
+
+### 4. Cart Frontend (React)
+**What I Asked For:**
+> "Create a CartContext.tsx using useReducer, a useCart.ts custom hook, cart item count badge in the header, CartPage.tsx, CartItem and CartSummary components, connect everything to the backend API with loading states and error handling."
+
+**What AI Generated:**
+- `types/CartItem.ts` — TypeScript interface
+- `services/cartService.ts` — service layer for all 5 API calls
+- `context/CartContext.tsx` — useReducer cart state with CartProvider and useCart hook
+- `components/Header.tsx` — scarlet header with live cart count badge
+- `components/CartPage.tsx` — full cart page with loading, error, and empty states
+- `components/CartItemRow.tsx` — quantity controls, remove button, line total
+- `components/CartSummary.tsx` — subtotal, total, clear cart button
+- `components/ProductCard.tsx` — updated with Add to Cart button
+- `components/ProductDetail.tsx` — updated with quantity selector and Add to Cart button
+- `App.tsx` — wrapped in CartProvider, added Header and `/cart` route
+
+**My Contribution:**
+- Reviewed all generated components for correctness and consistency
+- Manually tested every user flow end-to-end
+
+---
+
+## Modifications Made
+
+No major modifications were needed — the generated code worked as expected after testing. All features were verified manually.
+
+---
+
+## Testing Results
+
+All features tested and confirmed working:
+
+- 8 products display correctly from the database
+- Add to Cart updates the header badge count
+- Cart page shows items, quantities, and totals
+- Quantity updates and removals work correctly
+- Cart persists after page refresh (SQLite database)
+
+---
+
+## AI-Generated vs. Student-Created Content
+
+### AI-Generated Content:
+- All model, controller, and React component code
+- Database context, migration, and seeding logic
+- Service layer and state management (CartContext)
+
+### Student-Created Content:
+- Directed all prompts and scoped the feature requirements
+- Reviewed and validated every generated file before use
+- Performed all manual testing and verified correctness
+- Made architectural decisions (SQLite, hardcoded userId, route structure)
+- Integrated the feature into the existing project
+
+---
+
+## Learning Outcomes
+
+**What I Learned:**
+- How Entity Framework Core models, migrations, and DbContext work together
+- How to manage shared state in React with useReducer and Context API
+- How a REST API and a React frontend communicate end-to-end
+- How SQLite persistence works in a .NET application
+
+**How AI Helped My Learning:**
+- Explained EF Core concepts as it generated the code
+- Demonstrated patterns (useReducer, service layer) I can apply in future work
+- Let me focus on understanding the system rather than syntax
+
+**What I Did Independently:**
+- Defined the feature scope and requirements for Milestone 4
+- Directed and refined all prompts
+- Reviewed, tested, and validated all generated code
+- Made all decisions about project structure and implementation approach
+
+---
+
+## Ethical Use Statement
+
+I used Claude Code and Claude.ai as implementation assistants for Milestone 4. I directed all prompts, reviewed every file that was generated, and manually tested all features before considering them complete. The AI accelerated development, but understanding the code and verifying its correctness was my responsibility. All architectural and design decisions were my own.
+
+---
+
+**Signature:** Jackson Ware  
+**Date:** March 31, 2026

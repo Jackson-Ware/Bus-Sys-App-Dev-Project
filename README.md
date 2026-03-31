@@ -131,13 +131,40 @@ React app will be available at `http://localhost:5173`
   `import type { Product }` — fixed manually in all three component files
 - Disabled HTTPS redirection in Program.cs to fix localhost redirect loop
 - Added port 5174 to CORS config when Vite switched ports
+
+**Milestone 4**
+
+**Tools Used:** Claude Code (VS Code extension), Claude.ai (chat)
+
+| What | Generated |
+|------|-----------|
+| EF Core setup | `CartItem.cs`, `AppDbContext.cs`, EF migration, SQLite connection string |
+| Cart API | `CartController.cs` (5 endpoints), `ProductsController.cs` refactored to use DbContext |
+| Cart frontend | `CartContext.tsx`, `cartService.ts`, `Header.tsx`, `CartPage.tsx`, `CartItemRow.tsx`, `CartSummary.tsx` |
+| Updated components | `ProductCard.tsx` and `ProductDetail.tsx` — Add to Cart button and quantity selector |
+| App wiring | `App.tsx` wrapped in CartProvider, added Header and `/cart` route |
+
+**My own decisions:**
+- Chose SQLite for local development simplicity
+- Scoped cart to hardcoded userId 1 (auth not yet implemented)
+- Directed all prompts and reviewed/tested every generated file before use
+
+See [AI Usage Documentation](docs/AI-Usage-Documentation.md) for full prompt details.
+
 ---
 
 ## Project Status
 
-**Current Milestone:** Milestone 3 - Product Catalog (Vertical Slice 1)
-**Completion Date:** March 6, 2026  
+**Current Milestone:** Milestone 4 - Shopping Cart (Vertical Slice 2)
+**Completion Date:** March 31, 2026  
 **Course:** ACCTMIS 4630 - Business Systems Development
+
+| Milestone | Feature | Status |
+|-----------|---------|--------|
+| M1 | Project Setup & Planning | Complete |
+| M2 | Architecture Design & Frontend Foundation | Complete |
+| M3 | Product Catalog (Vertical Slice 1) | Complete |
+| M4 | Shopping Cart (Vertical Slice 2) | Complete |
 
 ---
 
