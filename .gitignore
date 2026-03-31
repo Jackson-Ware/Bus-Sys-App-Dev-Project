@@ -1,3 +1,13 @@
+# .NET build artifacts
+bin/
+obj/
+*.user
+*.suo
+.vs/
+*.db
+*.db-shm
+*.db-wal
+
 # Logs
 logs
 *.log
