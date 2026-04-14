@@ -4,6 +4,8 @@ VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuckeyeMarketplace.API", "BuckeyeMarketplace.API\BuckeyeMarketplace.API.csproj", "{3C49F151-55A2-83B9-C664-94B4A5455A82}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuckeyeMarketplace.Tests", "BuckeyeMarketplace.Tests\BuckeyeMarketplace.Tests.csproj", "{B2E4F6A8-1C3D-4E5F-8A9B-0C1D2E3F4A5B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -14,6 +16,10 @@ Global
 		{3C49F151-55A2-83B9-C664-94B4A5455A82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C49F151-55A2-83B9-C664-94B4A5455A82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C49F151-55A2-83B9-C664-94B4A5455A82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2E4F6A8-1C3D-4E5F-8A9B-0C1D2E3F4A5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2E4F6A8-1C3D-4E5F-8A9B-0C1D2E3F4A5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2E4F6A8-1C3D-4E5F-8A9B-0C1D2E3F4A5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2E4F6A8-1C3D-4E5F-8A9B-0C1D2E3F4A5B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

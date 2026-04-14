@@ -1,5 +1,7 @@
+using System.Security.Claims;
 using BuckeyeMarketplace.API.Data;
 using BuckeyeMarketplace.API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,24 +9,25 @@ namespace BuckeyeMarketplace.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class CartController : ControllerBase
 {
     private readonly AppDbContext _context;
-
-    // Hardcoded user ID until M5 authentication is implemented
-    private const string HardcodedUserId = "user-1";
 
     public CartController(AppDbContext context)
     {
         _context = context;
     }
 
+    private string GetUserId() => User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+
     // GET /api/cart
     [HttpGet]
     public async Task<ActionResult<IEnumerable<CartItem>>> GetCart()
     {
+        var userId = GetUserId();
         var items = await _context.CartItems
-            .Where(c => c.UserId == HardcodedUserId)
+            .Where(c => c.UserId == userId)
             .Include(c => c.Product)
             .ToListAsync();
 
@@ -42,9 +45,11 @@ public class CartController : ControllerBase
         if (product == null)
             return NotFound(new { message = $"Product with ID {request.ProductId} not found." });
 
+        var userId = GetUserId();
+
         // If the item is already in cart, increment quantity
         var existing = await _context.CartItems
-            .FirstOrDefaultAsync(c => c.UserId == HardcodedUserId && c.ProductId == request.ProductId);
+            .FirstOrDefaultAsync(c => c.UserId == userId && c.ProductId == request.ProductId);
 
         if (existing != null)
         {
@@ -56,7 +61,7 @@ public class CartController : ControllerBase
 
         var cartItem = new CartItem
         {
-            UserId = HardcodedUserId,
+            UserId = userId,
             ProductId = request.ProductId,
             Quantity = request.Quantity,
             AddedDate = DateTime.UtcNow
@@ -76,9 +81,10 @@ public class CartController : ControllerBase
         if (request.Quantity < 1)
             return BadRequest(new { message = "Quantity must be at least 1." });
 
+        var userId = GetUserId();
         var cartItem = await _context.CartItems
             .Include(c => c.Product)
-            .FirstOrDefaultAsync(c => c.Id == cartItemId && c.UserId == HardcodedUserId);
+            .FirstOrDefaultAsync(c => c.Id == cartItemId && c.UserId == userId);
 
         if (cartItem == null)
             return NotFound(new { message = $"Cart item with ID {cartItemId} not found." });
@@ -93,8 +99,9 @@ public class CartController : ControllerBase
     [HttpDelete("clear")]
     public async Task<IActionResult> ClearCart()
     {
+        var userId = GetUserId();
         var items = await _context.CartItems
-            .Where(c => c.UserId == HardcodedUserId)
+            .Where(c => c.UserId == userId)
             .ToListAsync();
 
         _context.CartItems.RemoveRange(items);
@@ -107,8 +114,9 @@ public class CartController : ControllerBase
     [HttpDelete("{cartItemId:int}")]
     public async Task<IActionResult> RemoveItem(int cartItemId)
     {
+        var userId = GetUserId();
         var cartItem = await _context.CartItems
-            .FirstOrDefaultAsync(c => c.Id == cartItemId && c.UserId == HardcodedUserId);
+            .FirstOrDefaultAsync(c => c.Id == cartItemId && c.UserId == userId);
 
         if (cartItem == null)
             return NotFound(new { message = $"Cart item with ID {cartItemId} not found." });

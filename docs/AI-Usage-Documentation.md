@@ -330,3 +330,124 @@ I used Claude Code and Claude.ai as implementation assistants for Milestone 4. I
 
 **Signature:** Jackson Ware  
 **Date:** March 31, 2026
+
+---
+
+---
+
+# AI Usage Documentation — Milestone 5
+
+## Project Information
+**Project:** OSU Campus Store eCommerce Platform  
+**Course:** ACCTMIS 4630 - Business Systems Development  
+**Milestone:** Milestone 5 - Authentication, Authorization & Testing  
+**Student:** Jackson Ware  
+**Date:** April 13, 2026
+
+---
+
+## AI Tools Used
+- **Claude Code** (VS Code extension) — test generation, security review, implementation guidance
+- **Claude.ai** (chat) — planning and troubleshooting
+
+---
+
+## Tasks Where AI Was Used
+
+### 1. Test Suite Generation
+**What I Asked For:**
+> "Write backend xUnit tests for CartController. The controller now reads userId from JWT claims via `User.FindFirstValue(ClaimTypes.NameIdentifier)` — not hardcoded. Cover: AddToCart with quantity below 1 returns 400, AddToCart with a nonexistent product returns 404, UpdateQuantity with quantity below 1 returns 400. Use an in-memory DbContext, set up a fake ClaimsPrincipal on the ControllerContext, and use FluentAssertions."
+
+**What AI Provided:**
+- `CartControllerUnitTests.cs` — 3 unit tests covering bad input and missing product cases
+- `CartAuthorizationTests.cs` — 1 integration test using `WebApplicationFactory` to assert that `GET /api/cart` without a JWT returns 401
+- `cartReducer.test.ts` — 7 tests covering all `cartReducer` action types (SET_CART, REMOVE_ITEM, UPDATE_ITEM, CLEAR, SET_ERROR, SET_SUCCESS, unknown)
+- `CartContext.test.tsx` — 4 tests for `CartProvider`/`useCart`: loading state, item count, addToCart success, addToCart error
+- `ProductList.test.tsx` — 4 tests: loading state, renders products, empty array, fetch error
+- `shopping-flow.spec.ts` — 1 Playwright E2E test: register → browse → add to cart → view cart
+
+**My Contribution:**
+- Directed each prompt and specified which behaviors to cover
+- Reviewed every generated test file against the actual source code before accepting it
+- Ran all suites and confirmed results before including them
+
+---
+
+### 2. One Thing Claude Got Wrong
+
+**What happened:**  
+When Claude first generated the admin seeding block in `Program.cs`, it hardcoded the admin password directly in source as a string literal:
+
+```csharp
+// Claude's original (wrong) version
+PasswordHash = BCrypt.Net.BCrypt.HashPassword("Admin123!")
+```
+
+**How I caught it:**  
+During a security review of the generated `Program.cs`, I noticed the plaintext password sitting in source code — meaning it would have been committed to the repository and visible in version history to anyone with repo access.
+
+**How I fixed it:**  
+I directed Claude to replace the literal with a configuration lookup backed by .NET User Secrets:
+
+```csharp
+// Fixed version
+var adminPassword = builder.Configuration["Seed:AdminPassword"]
+    ?? throw new InvalidOperationException(
+        "Seed:AdminPassword is not configured. Run: dotnet user-secrets set \"Seed:AdminPassword\" \"<strong-password>\"");
+
+PasswordHash = BCrypt.Net.BCrypt.HashPassword(adminPassword)
+```
+
+The `Seed:AdminPassword` value now lives in the local User Secrets store (never committed) and is injected at runtime. The integration test factory supplies its own test value via `AddInMemoryCollection`.
+
+---
+
+## Test Commands and Results
+
+| Command | Runner | Result |
+|---|---|---|
+| `dotnet test` | xUnit | **4 passing**, 0 failing |
+| `npm test` | Vitest | **15 passing**, 0 failing |
+| `npx playwright test` | Playwright | **1 passing**, 0 failing |
+
+---
+
+## AI-Generated vs. Student-Created Content
+
+### AI-Generated Content:
+- All test file scaffolding and assertion logic
+- `WebApplicationFactory` setup for integration tests
+- Vitest mock patterns for `cartService`
+
+### Student-Created Content:
+- Identified which behaviors warranted test coverage
+- Directed all prompts with specific requirements
+- Caught and corrected the hardcoded admin password security issue
+- Reviewed every test against the actual source code signatures
+- Ran all suites and validated results independently
+
+---
+
+## Learning Outcomes
+
+**What I Learned:**
+- How `WebApplicationFactory` enables full-stack integration tests without a live server
+- How JWT claims flow from middleware into controller logic and how to replicate that in unit tests
+- The risk of committing secrets in source code and how .NET User Secrets mitigates it
+- How Vitest's `vi.mock` and `vi.stubGlobal` isolate components from real network calls
+
+**What I Did Independently:**
+- Identified the hardcoded-password vulnerability before it was committed
+- Directed the scope and structure of all five test files
+- Validated every test result against the running application
+
+---
+
+## Ethical Use Statement
+
+I used Claude Code as a test-generation assistant for Milestone 5. I directed all prompts, reviewed every file against the real source code, and ran all test suites myself to confirm correctness. The security issue with the hardcoded admin password was caught through my own review — not by the AI. All decisions about what to test and what constitutes a passing result were my own.
+
+---
+
+**Signature:** Jackson Ware  
+**Date:** April 13, 2026

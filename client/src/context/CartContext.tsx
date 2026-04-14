@@ -18,7 +18,7 @@ type CartAction =
   | { type: 'REMOVE_ITEM'; cartItemId: number }
   | { type: 'CLEAR' };
 
-function cartReducer(state: CartState, action: CartAction): CartState {
+export function cartReducer(state: CartState, action: CartAction): CartState {
   switch (action.type) {
     case 'SET_CART':
       return { ...state, items: action.items, loading: false, error: null };
