@@ -44,6 +44,7 @@ export default function CartSummary() {
       </div>
 
       <button
+        onClick={() => navigate('/checkout')}
         style={{
           width: '100%',
           backgroundColor: '#BB0000',

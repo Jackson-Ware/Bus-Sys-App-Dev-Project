@@ -34,4 +34,44 @@ public class AdminController : ControllerBase
 
         return Ok(users);
     }
+
+    // GET /api/admin/orders
+    // Returns all orders with user email, items, and status.
+    [HttpGet("orders")]
+    public async Task<IActionResult> GetAllOrders()
+    {
+        var orders = await _db.Orders
+            .Include(o => o.OrderItems)
+            .OrderByDescending(o => o.OrderDate)
+            .ToListAsync();
+
+        var userEmails = await _db.Users
+            .ToDictionaryAsync(u => u.Id.ToString(), u => u.Email);
+
+        var result = orders.Select(o => new
+        {
+            o.Id,
+            o.ConfirmationNumber,
+            o.OrderDate,
+            o.TotalAmount,
+            o.Status,
+            o.ShippingName,
+            o.ShippingAddress,
+            o.ShippingCity,
+            o.ShippingState,
+            o.ShippingZip,
+            UserEmail = userEmails.TryGetValue(o.UserId, out var email) ? email : o.UserId,
+            OrderItems = o.OrderItems.Select(oi => new
+            {
+                oi.Id,
+                oi.OrderId,
+                oi.ProductId,
+                oi.ProductTitle,
+                oi.UnitPrice,
+                oi.Quantity,
+            }),
+        });
+
+        return Ok(result);
+    }
 }

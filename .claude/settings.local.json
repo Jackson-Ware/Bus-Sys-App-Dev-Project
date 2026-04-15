@@ -11,7 +11,8 @@
       "Bash(npm test:*)",
       "Bash(npm init:*)",
       "Bash(npm install:*)",
-      "Bash(npx playwright:*)"
+      "Bash(npx playwright:*)",
+      "Bash(cmd.exe /c \"cd /d C:\\\\Users\\\\jacks\\\\Documents\\\\Bus-Sys-App-Dev-Project\\\\BuckeyeMarketplace.API && dotnet ef migrations add AddOrders 2>&1\")"
     ]
   }
 }

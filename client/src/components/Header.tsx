@@ -63,6 +63,21 @@ export default function Header() {
               )}
             </button>
 
+            {user?.role === 'Admin' ? (
+              <>
+                <button onClick={() => navigate('/admin')} style={navButtonStyle}>
+                  Orders
+                </button>
+                <button onClick={() => navigate('/admin/products')} style={navButtonStyle}>
+                  Products
+                </button>
+              </>
+            ) : (
+              <button onClick={() => navigate('/orders')} style={navButtonStyle}>
+                Orders
+              </button>
+            )}
+
             <button onClick={handleLogout} style={navButtonStyle}>
               Sign Out
             </button>
