@@ -1,7 +1,8 @@
 import type { CartItem } from '../types/CartItem';
+import { API_BASE } from '../api/http';
 import { getToken } from './authService';
 
-const BASE_URL = 'http://localhost:5000/api/cart';
+const BASE_URL = `${API_BASE}/api/cart`;
 
 function authHeaders(): HeadersInit {
   const token = getToken();

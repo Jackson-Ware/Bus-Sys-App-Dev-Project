@@ -1,7 +1,8 @@
 import type { CheckoutFormData, Order, OrderConfirmation } from '../types/Order';
+import { API_BASE } from '../api/http';
 import { getToken } from './authService';
 
-const BASE_URL = 'http://localhost:5000/api/orders';
+const BASE_URL = `${API_BASE}/api/orders`;
 
 function authHeaders(): HeadersInit {
   const token = getToken();

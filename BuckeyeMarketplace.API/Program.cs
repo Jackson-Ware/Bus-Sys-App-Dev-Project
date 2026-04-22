@@ -2,6 +2,7 @@ using System.Text;
 using BuckeyeMarketplace.API.Data;
 using BuckeyeMarketplace.API.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -12,9 +13,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi();
 
-// Register AppDbContext with SQLite
+// Register AppDbContext — provider selected via Database:Provider config
+var dbProvider = builder.Configuration["Database:Provider"];
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+{
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    if (dbProvider == "SqlServer")
+        options.UseSqlServer(connectionString);
+    else
+        options.UseSqlite(connectionString);
+});
 
 // JWT Authentication
 var jwtKey = builder.Configuration["Jwt:Key"]
@@ -40,11 +48,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization();
 
-// Configure CORS to allow React frontend
+// Configure CORS — origins read from Cors:AllowedOrigins config
+var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>()
+    ?? ["http://localhost:5173", "http://localhost:5174"];
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReact",
-        policy => policy.WithOrigins("http://localhost:5173", "http://localhost:5174")
+        policy => policy.WithOrigins(allowedOrigins)
                         .AllowAnyHeader()
                         .AllowAnyMethod());
 });
@@ -55,7 +65,8 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.Migrate();
+    if (Environment.GetEnvironmentVariable("RUN_MIGRATIONS_ON_START") == "true")
+        db.Database.Migrate();
 
     // Seed admin account if none exists
     if (!db.Users.Any(u => u.Role == "Admin"))
@@ -84,6 +95,9 @@ if (app.Environment.IsDevelopment())
         options.SwaggerEndpoint("/openapi/v1.json", "v1");
     });
 }
+
+if (Environment.GetEnvironmentVariable("ASPNETCORE_FORWARDEDHEADERS_ENABLED") == "true")
+    app.UseForwardedHeaders();
 
 // app.UseHttpsRedirection();
 app.UseCors("AllowReact");

@@ -1,4 +1,6 @@
-const BASE_URL = 'http://localhost:5000/api/auth';
+import { API_BASE } from '../api/http';
+
+const BASE_URL = `${API_BASE}/api/auth`;
 const TOKEN_KEY = 'bm_token';
 
 export interface AuthResponse {

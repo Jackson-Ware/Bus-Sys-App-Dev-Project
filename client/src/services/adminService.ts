@@ -1,9 +1,10 @@
 import type { Order } from '../types/Order';
+import { API_BASE } from '../api/http';
 import { getToken } from './authService';
 
-const ORDERS_BASE = 'http://localhost:5000/api/orders';
-const ADMIN_BASE = 'http://localhost:5000/api/admin';
-const PRODUCTS_BASE = 'http://localhost:5000/api/products';
+const ORDERS_BASE = `${API_BASE}/api/orders`;
+const ADMIN_BASE = `${API_BASE}/api/admin`;
+const PRODUCTS_BASE = `${API_BASE}/api/products`;
 
 export interface AdminOrder extends Order {
   userEmail: string;
