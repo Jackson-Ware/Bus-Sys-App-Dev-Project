@@ -147,3 +147,6 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+appsettings.Development.json
+buckeye_marketplace.db
