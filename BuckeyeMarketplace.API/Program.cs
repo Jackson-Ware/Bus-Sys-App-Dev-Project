@@ -22,6 +22,11 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         options.UseSqlServer(connectionString);
     else
         options.UseSqlite(connectionString);
+    
+    // Suppress warning about pending model changes
+    options.ConfigureWarnings(w => 
+        w.Ignore(Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.PendingModelChangesWarning)
+    );
 });
 
 // JWT Authentication

@@ -37,6 +37,11 @@ public class AppDbContext : DbContext
             .HasForeignKey(oi => oi.ProductId)
             .OnDelete(DeleteBehavior.Restrict);
 
+        // Configure Product entity with decimal precision
+        modelBuilder.Entity<Product>()
+            .Property(p => p.Price)
+            .HasPrecision(18, 2);
+
         // Seed the 8 OSU products
         modelBuilder.Entity<Product>().HasData(
             new Product
