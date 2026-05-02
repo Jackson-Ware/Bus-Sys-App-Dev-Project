@@ -1,1 +1,1 @@
-export const API_BASE: string = import.meta.env.VITE_API_URL ?? '';
+export const API_BASE: string = import.meta.env.VITE_API_URL ?? 'https://buckeye-marketplace-api.azurewebsites.net';
