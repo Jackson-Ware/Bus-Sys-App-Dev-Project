@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import type { Product } from '../types/Product';
 import { useCart } from '../context/CartContext';
+import { API_BASE } from '../api/http';
 
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
@@ -18,7 +19,7 @@ export default function ProductDetail() {
     const fetchProduct = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:5000/api/products/${id}`);
+        const response = await fetch(`${API_BASE}/api/products/${id}`);
         if (!response.ok) {
           throw new Error('Failed to fetch product');
         }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { Product } from '../types/Product';
 import ProductCard from './ProductCard';
+import { API_BASE } from '../api/http';
 
 export default function ProductList() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -11,7 +12,7 @@ export default function ProductList() {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const response = await fetch('http://localhost:5000/api/products');
+        const response = await fetch(`${API_BASE}/api/products`);
         if (!response.ok) {
           throw new Error('Failed to fetch products');
         }

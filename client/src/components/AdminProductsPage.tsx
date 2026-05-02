@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import type { Product } from '../types/Product';
 import type { ProductRequest } from '../services/adminService';
 import { createProduct, updateProduct, deleteProduct } from '../services/adminService';
+import { API_BASE } from '../api/http';
 
 const EMPTY_FORM: ProductRequest = {
   title: '',
@@ -26,7 +27,7 @@ export default function AdminProductsPage() {
   const [form, setForm] = useState<ProductRequest>(EMPTY_FORM);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/products')
+    fetch(`${API_BASE}/api/products`)
       .then(r => r.json())
       .then(setProducts)
       .catch(() => setError('Failed to load products'))
@@ -68,7 +69,7 @@ export default function AdminProductsPage() {
       if (editingId === -1) {
         // Create — re-fetch to get the server-assigned id and postedDate
         await createProduct(form);
-        const res = await fetch('http://localhost:5000/api/products');
+        const res = await fetch(`${API_BASE}/api/products`);
         setProducts(await res.json());
       } else if (editingId !== null) {
         await updateProduct(editingId, form);
