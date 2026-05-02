@@ -65,4 +65,4 @@ jobs:
           action: upload
           skip_app_build: true
           app_location: client/dist
-          output_location: dist
+          output_location: ''
